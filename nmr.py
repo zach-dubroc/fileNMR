@@ -1,32 +1,23 @@
 #file functions
 import os
-#time functions
-from datetime import datetime
+import time
 
 #TODO
-#redo function to use date and time format
+#tie to gui
+#make drag/drop that can take multiple files or folder
 
-
-#print day in day/month/year format
-dateTest = datetime.now().strftime("%#m/%d/%y")
-#print time in hour:minuteAM/PM format
-timeTest = datetime.now().strftime("%#I:%M%p")
-formatTest = dateTest + " at " + timeTest 
-print(formatTest)
-
-#main rename function 
-def rename_files(directory, newname):
+def rename_files(directory):
     files = os.listdir(directory)
-    counter = 1
     for file in files:
-        #split on '.' and grab last element to keep extension type
+        #split on '.' and grab ext
         filetype = file.split(".")[-1]
-        #rename takes two args, (folder + filename, folder + newname)
-        os.rename(directory + "/" + file, directory + "/" + newname + str(counter) + "." + filetype)
-        counter += 1
-        #test
-        print("renamed file " + file + "to " + newname + str(counter) + "." + filetype)
+        currentPath = directory + "\\"  + file
+        #format name from timestamp
+        createTime = os.path.getctime(currentPath)
+        timeObj = time.strptime(time.ctime(createTime))
+        fTime = time.strftime("%#m-%d-%y, %#I.%M%p", timeObj)
+        os.rename(currentPath, directory + "\\" + fTime + "." + filetype)
 
-path = R"C:\Users\zvd19\source\temp\testdir"
+path =(R"C:\users\zvd19\source\temp\testdir")
 
-rename_files(path, "works")
+rename_files(path)
