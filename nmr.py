@@ -3,8 +3,7 @@ import os
 import time
 
 #TODO
-#tie to gui
-#make drag/drop that can take multiple files or folder
+#send rename file func to convert button in ui/set file path with select files btn
 
 def rename_files(directory):
     files = os.listdir(directory)

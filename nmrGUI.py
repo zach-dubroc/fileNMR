@@ -1,29 +1,39 @@
-# has to have customtkinter master file inside of directore, regular install won't work?
 
-
-# Import customtkinter module
 import customtkinter as ctk
+from CTkListbox import *
  
-# Sets the appearance mode of the application
-# "System" sets the appearance same as that of the system
-ctk.set_appearance_mode("dark")        
- 
-# Sets the color of the widgets
-# Supported themes: green, dark-blue, blue
-ctk.set_default_color_theme("dark-blue")    
- 
-# Create App class
-class App(ctk.CTk):
-# Layout of the GUI will be written in the init itself
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-# Sets the title of our window to "App"
-        self.title("NMR")    
-# Dimensions of the window will be 200x200
-        self.geometry("500x350")    
- 
- 
-if __name__ == "__main__":
-    app = App()
-    # Runs the app
-    app.mainloop()    
+
+ #init window
+window = ctk.CTk()
+window.title("nmr")
+window.geometry("650x450")
+window.minsize(width=350, height=250)
+
+#define grid
+window.columnconfigure((0,1,2), weight=1)
+window.rowconfigure((0,1,2), weight=1)
+
+
+#header label
+head_label = ctk.CTkLabel(master=window, text="file-nmr", font=("monospace", 20))
+head_label.grid(row=0,column=1, sticky="nesw")
+
+
+#listbox for old filenames
+listbox = CTkListbox(master=window)
+listbox.insert(0,"test 1")
+listbox.insert(1,"test 2")
+listbox.insert(2,"test 3")
+listbox.insert(3,"test 4")
+listbox.insert(4,"test 5")
+listbox.grid(row=1, columnspan=3, sticky="nsew", padx=15)
+
+#select file button should open file dialog and accept a folder to get filenames from
+file_select_btn = ctk.CTkButton(master=window, text="select files")
+file_select_btn.grid(row=0, column=0, padx=5, sticky="w")
+
+#should run rename function on selected folder
+file_convert_btn = ctk.CTkButton(master=window, text="convert files")
+file_convert_btn.grid(row=2, column=0, padx=5, sticky="w")
+
+window.mainloop()
