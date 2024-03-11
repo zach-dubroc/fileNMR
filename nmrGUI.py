@@ -2,13 +2,14 @@
 import customtkinter as ctk
 from CTkListbox import *
 from customtkinter import filedialog    
+import os
 
-#open file dialog, store path
-def select_folder():
-    foldername=filedialog.askdirectory()
-    print(foldername)
 
- #init window
+
+
+
+
+#init window
 window = ctk.CTk()
 window.title("nmr")
 window.geometry("650x450")
@@ -25,15 +26,20 @@ head_label.grid(row=0,column=1, sticky="nesw")
 
 #listbox for old filenames
 listbox = CTkListbox(master=window)
-listbox.insert(0,"test 1")
-listbox.insert(1,"test 2")
-listbox.insert(2,"test 3")
-listbox.insert(3,"test 4")
-listbox.insert(4,"test 5")
+
+def get_folder():
+    folder_name = filedialog.askdirectory()
+    files = os.listdir(folder_name)
+    counter = 0
+    for file in files:
+        counter += 1
+        listbox.insert(counter, file)
+
 listbox.grid(row=1, columnspan=3, sticky="nsew", padx=15)
 
+
 #select file button should open file dialog and accept a folder to get filenames from
-file_select_btn = ctk.CTkButton(master=window, text="select files", command=select_folder)
+file_select_btn = ctk.CTkButton(master=window, text="select files", command=get_folder)
 file_select_btn.grid(row=0, column=0, padx=5, sticky="w")
 
 #should run rename function on selected folder
