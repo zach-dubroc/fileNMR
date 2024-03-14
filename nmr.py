@@ -14,9 +14,9 @@ def rename_files(directory):
         #format name from timestamp
         createTime = os.path.getctime(currentPath)
         timeObj = time.strptime(time.ctime(createTime))
-        fTime = time.strftime("%#m-%d-%y, %#I.%M%p", timeObj)
+        fTime = time.strftime("%#m-%d-%y, %#I.%M.%S-%p", timeObj)
         os.rename(currentPath, directory + "\\" + fTime + "." + filetype)
 
-path =(R"C:\users\zvd19\source\temp\testdir")
+# path =(R"C:\Users\MCA\Desktop\testdir")
 
-rename_files(path)
+# rename_files(path)
