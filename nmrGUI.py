@@ -4,9 +4,10 @@ from CTkListbox import *
 from customtkinter import filedialog    
 import os
 from nmr import rename_files
+import time
 
 
-
+path = ""
 
 #init window
 window = ctk.CTk()
@@ -33,10 +34,25 @@ def get_folder():
     folder_name = filedialog.askdirectory()
     path = folder_name
     files = os.listdir(folder_name)
+    #for index arg
     counter = 0
     for file in files:
         counter += 1
         listbox.insert(counter, file)
+
+
+def rename_files(directory):
+    files = os.listdir(directory)
+    for file in files:
+        #split on '.' and grab ext
+        filetype = file.split(".")[-1]
+        currentPath = directory + "\\"  + file
+        #format name from timestamp
+        createTime = os.path.getctime(currentPath)
+        timeObj = time.strptime(time.ctime(createTime))
+        fTime = time.strftime("%#m-%d-%y, %#I.%M.%S-%p", timeObj)
+        os.rename(currentPath, directory + "\\" + fTime + "." + filetype)
+
 
 
 
