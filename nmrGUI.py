@@ -3,11 +3,7 @@ import customtkinter as ctk
 from CTkListbox import *
 from customtkinter import filedialog    
 import os
-from nmr import rename_files
 import time
-
-
-path = ""
 
 #init window
 window = ctk.CTk()
@@ -29,9 +25,12 @@ listbox = CTkListbox(master=window)
 #listbox for renamed
 listbox2 = CTkListbox(master=window)
 
+#Y NO ACCESS FROM FUNCTIONS
+path = ""
 
-def get_folder():
+def get_folder(): 
     folder_name = filedialog.askdirectory()
+    global path
     path = folder_name
     files = os.listdir(folder_name)
     #for index arg
@@ -39,7 +38,6 @@ def get_folder():
     for file in files:
         counter += 1
         listbox.insert(counter, file)
-
 
 def rename_files(directory):
     files = os.listdir(directory)
@@ -52,9 +50,7 @@ def rename_files(directory):
         timeObj = time.strptime(time.ctime(createTime))
         fTime = time.strftime("%#m-%d-%y, %#I.%M.%S-%p", timeObj)
         os.rename(currentPath, directory + "\\" + fTime + "." + filetype)
-
-
-
+        listbox2.insert(file)
 
 listbox.grid(row=1, columnspan=2, sticky="nsw", padx=15)
 listbox2.grid(row=1, columnspan=2, sticky="nse", padx=15)
@@ -64,7 +60,7 @@ file_select_btn = ctk.CTkButton(master=window, text="select files", command=get_
 file_select_btn.grid(row=0, column=0, padx=5, sticky="w")
 
 #should run rename function on selected folder
-file_convert_btn = ctk.CTkButton(master=window, text="rename files")
+file_convert_btn = ctk.CTkButton(master=window, text="rename files", command=rename_files(path))
 file_convert_btn.grid(row=2, column=0, padx=5, sticky="w")
 
 window.mainloop()
